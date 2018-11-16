@@ -1,16 +1,14 @@
 package ImportGraph;
 
-import java.util.Map;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.jgrapht.Graph;
-import org.jgrapht.alg.clique.ChordalGraphMaxCliqueFinder;
-import org.jgrapht.alg.interfaces.CliqueAlgorithm.Clique;
+import org.jgrapht.alg.clique.BronKerboschCliqueFinder;
 import org.jgrapht.alg.scoring.AlphaCentrality;
 import org.jgrapht.alg.scoring.BetweennessCentrality;
 import org.jgrapht.alg.scoring.ClosenessCentrality;
 import org.jgrapht.alg.scoring.ClusteringCoefficient;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
 
 public class Solution {
 
@@ -60,10 +58,19 @@ public class Solution {
 
 	public String maximumClique(Graph<DefaultVertex, RelationshipEdge> g) {
 		String saida = "";
-		
-		ChordalGraphMaxCliqueFinder c = new ChordalGraphMaxCliqueFinder(g);
-		Clique clique = c.getClique();
-		System.out.println(clique.isEmpty());
+		BronKerboschCliqueFinder<DefaultVertex, RelationshipEdge> clique = new BronKerboschCliqueFinder<>(g);
+		Iterator<Set<DefaultVertex>> a = clique.maximumIterator();
+		int cont = 0;
+		for(Iterator i = a; i.hasNext();){
+			Set<DefaultVertex> b =  (Set<DefaultVertex>) i.next();
+			saida += (cont + 1) + "º clique maximal" + System.lineSeparator();
+			for(DefaultVertex v: b) {
+				saida += v.toString() + " | ";
+			}
+			
+			saida = saida.substring(0, saida.length() - 3) + System.lineSeparator();
+			cont++;
+		}
 		
 		return saida;
 	}
