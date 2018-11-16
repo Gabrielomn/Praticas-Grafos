@@ -1,6 +1,9 @@
 package ImportGraph;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.Graph;
@@ -16,14 +19,19 @@ public class Solution {
 		AlphaCentrality<DefaultVertex, RelationshipEdge> value = new AlphaCentrality<DefaultVertex, RelationshipEdge>(g,
 				0.1);
 		String saida = "";
-
+		List<VerticeEValor> lista = new ArrayList<>();	
 		for (DefaultVertex chave : g.vertexSet()) {
-
-			saida += chave.toString() + ": " + String.format("%.2f", value.getVertexScore(chave)) + " | ";
+			lista.add(new VerticeEValor(chave, value.getVertexScore(chave)));
+			//saida += chave.toString() + ": " + String.format("%.2f", value.getVertexScore(chave)) + " | ";
 
 		}
+		
+		Collections.sort(lista);
+		for(VerticeEValor v: lista) {
+			saida += v + " | ";
+		}
 
-		return saida;
+		return saida.substring(0, saida.length() - 3);
 	}
 
 	public String closenessCentrality(Graph<DefaultVertex, RelationshipEdge> g) {
@@ -31,10 +39,17 @@ public class Solution {
 		ClosenessCentrality<DefaultVertex, RelationshipEdge> value = new ClosenessCentrality<DefaultVertex, RelationshipEdge>(
 				g);
 
+		List<VerticeEValor> lista = new ArrayList<>();	
+
 		for (DefaultVertex chave : g.vertexSet()) {
+			lista.add(new VerticeEValor(chave, value.getVertexScore(chave)));
+		//	saida += chave.toString() + ": " + String.format("%.2f", value.getVertexScore(chave)) + " | ";
 
-			saida += chave.toString() + ": " + String.format("%.2f", value.getVertexScore(chave)) + " | ";
-
+		}
+		
+		Collections.sort(lista);
+		for(VerticeEValor v: lista) {
+			saida += v + " | ";
 		}
 
 		return saida.substring(0, saida.length() - 3);
@@ -43,11 +58,19 @@ public class Solution {
 	public String betweenCentrality(Graph<DefaultVertex, RelationshipEdge> g) {
 		String saida = "";
 		BetweennessCentrality<DefaultVertex, RelationshipEdge> value = new BetweennessCentrality(g);
+		List<VerticeEValor> lista = new ArrayList<VerticeEValor>();	
+
 		for (DefaultVertex chave : g.vertexSet()) {
-			saida += chave.toString() + ": " + String.format("%.2f", value.getVertexScore(chave)) + " | ";
+			lista.add(new VerticeEValor(chave, value.getVertexScore(chave)));
 		}
 
-		return saida;
+		Collections.sort(lista);
+		for(VerticeEValor v: lista) {
+			saida += v + " | ";
+		}	
+		
+		
+		return saida.substring(0, saida.length() - 3);
 	}
 
 	public String clusteringCoeficient(Graph<DefaultVertex, RelationshipEdge> g) {

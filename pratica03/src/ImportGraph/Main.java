@@ -10,15 +10,15 @@ public class Main {
 Graph<DefaultVertex, RelationshipEdge> graph = importGraph.ImportSimpleGraphGML("./graph/lesmis.gml");
         Solution s = new Solution();
 
-        System.out.println(s.alphaCentrality(graph));
+        System.out.println("Alpha Centrality\n" + s.alphaCentrality(graph) + System.lineSeparator());
         
-        System.out.println(s.closenessCentrality(graph));
+        System.out.println("Closeness Centrality\n" + s.closenessCentrality(graph) + System.lineSeparator());
         
-        System.out.println(s.betweenCentrality(graph));
+        System.out.println("BetweenCentrality\n" + s.betweenCentrality(graph) + System.lineSeparator());
         
-        System.out.println(s.clusteringCoeficient(graph));
+        System.out.println("Coeficiente de clusterizacao: " + s.clusteringCoeficient(graph));
         
-        System.out.println(GraphMetrics.getDiameter(graph));
+        System.out.println("Diametro: " + GraphMetrics.getDiameter(graph));
         
         System.out.println(s.maximumClique(graph));
         	
